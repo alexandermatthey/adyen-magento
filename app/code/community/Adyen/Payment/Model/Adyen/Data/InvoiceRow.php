@@ -28,6 +28,7 @@
 class Adyen_Payment_Model_Adyen_Data_InvoiceRow extends Adyen_Payment_Model_Adyen_Data_Abstract {
 
     public $currency;
+    public $itemId;
     public $description;
     public $itemPrice;
     public $itemVAT;
@@ -38,6 +39,7 @@ class Adyen_Payment_Model_Adyen_Data_InvoiceRow extends Adyen_Payment_Model_Adye
     public function create($item, $count, $order) {
         $currency = $order->getOrderCurrencyCode();
         $this->currency = $currency;
+        $this->itemId = $item->getSku();
         $this->description = $item->getName();
         $this->itemPrice = Mage::helper('adyen')->formatAmount($item->getPrice(), $currency);
         $this->itemVAT = ($item->getTaxAmount()>0 && $item->getPriceInclTax()>0)?
